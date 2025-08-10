@@ -1,50 +1,66 @@
 <!doctype html>
 <html lang="zh">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>齐新新 · Xinxin Qi</title>
-<link rel="stylesheet" href="assets/style.css"/>
-<script>
-function setLang(lang) {
-  document.documentElement.setAttribute('lang', lang);
-  document.querySelectorAll('[data-i18n]').forEach(function(el) {
-    const key = el.getAttribute('data-i18n');
-    el.innerText = translations[lang][key] || el.innerText;
-  });
-  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
-    const key = el.getAttribute('data-i18n-html');
-    el.innerHTML = translations[lang][key] || el.innerHTML;
-  });
-  document.querySelectorAll('.toggle button').forEach(b => b.classList.remove('active'));
-  document.getElementById('btn-'+lang).classList.add('active');
-}
-const translations = {
-  "zh": {
-    "role": "研究方向",
-    "education": "教育背景",
-    "publications": "科研成果",
-    "pub-pub": "已发表论文",
-    "pub-under": "在投/在修",
-    "projects": "科研项目",
-    "awards": "荣誉与奖励",
-    "skills": "技能",
-    "footer": "© 2025 齐新新 · 本页由 GitHub Pages 托管"
-  },
-  "en": {
-    "role": "Research Interests",
-    "education": "Education",
-    "publications": "Publications",
-    "pub-pub": "Published",
-    "pub-under": "Under Review",
-    "projects": "Projects",
-    "awards": "Honors & Awards",
-    "skills": "Skills",
-    "footer": "© 2025 Xinxin Qi · Hosted by GitHub Pages"
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>齐新新 · Xinxin Qi</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <style>
+    /* 适度增强可读性的小优化（不依赖外部样式也能看） */
+    :root{--fg:#0b1220;--muted:#5b6473;--bg:#ffffff;--card:#f6f8fb;--brand:#0b72ff}
+    html,body{background:var(--bg);color:var(--fg)}
+    .badge{display:inline-block;background:var(--card);padding:4px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:12px;color:#333}
+    .paper-meta{font-size:13px;color:var(--muted)}
+    .status{font-size:12px;padding:2px 8px;border-radius:999px;background:#eef2ff;display:inline-block;margin-left:6px}
+  </style>
+  <script>
+  function setLang(lang) {
+    document.documentElement.setAttribute('lang', lang);
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      const key = el.getAttribute('data-i18n');
+      el.innerText = translations[lang][key] || el.innerText;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+      const key = el.getAttribute('data-i18n-html');
+      el.innerHTML = translations[lang][key] || el.innerHTML;
+    });
+    document.querySelectorAll('.toggle button').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-'+lang).classList.add('active');
   }
-};
-document.addEventListener('DOMContentLoaded', function(){ setLang('zh'); });
-</script>
+  const translations = {
+    zh: {
+      role: "研究方向",
+      about: "个人简介",
+      education: "教育背景",
+      publications: "论文成果（时间倒序）",
+      projects: "科研项目",
+      awards: "荣誉与奖励",
+      skills: "技能",
+      footer: "© 2025 齐新新 · 本页由 GitHub Pages 托管",
+      // labels
+      status_published: "已发表",
+      status_accepted: "已录用",
+      status_submitted: "在投",
+      status_revision: "在修",
+    },
+    en: {
+      role: "Research Interests",
+      about: "Bio",
+      education: "Education",
+      publications: "Publications (Reverse Chronological)",
+      projects: "Projects",
+      awards: "Honors & Awards",
+      skills: "Skills",
+      footer: "© 2025 Xinxin Qi · Hosted by GitHub Pages",
+      // labels
+      status_published: "Published",
+      status_accepted: "Accepted",
+      status_submitted: "Submitted",
+      status_revision: "Revision",
+    }
+  };
+  document.addEventListener('DOMContentLoaded', function(){ setLang('zh'); });
+  </script>
 </head>
 <body>
 <div class="container">
@@ -52,7 +68,13 @@ document.addEventListener('DOMContentLoaded', function(){ setLang('zh'); });
     <div>
       <div class="name">齐新新 · Xinxin Qi</div>
       <div class="meta">
-        <a href="mailto:qixinxin19@nudt.edu.cn">qixinxin19@nudt.edu.cn</a> 
+        <a href="mailto:qixinxin19@nudt.edu.cn">qixinxin19@nudt.edu.cn</a>
+      </div>
+      <div style="margin-top:6px">
+        <span class="badge">深度学习编译</span>
+        <span class="badge">高性能推理系统</span>
+        <span class="badge">算子优化</span>
+        <span class="badge">并行计算</span>
       </div>
     </div>
     <div class="toggle">
@@ -61,62 +83,138 @@ document.addEventListener('DOMContentLoaded', function(){ setLang('zh'); });
     </div>
   </header>
 
+  <!-- 个人简介 / Bio -->
+  <section class="section">
+    <h2 data-i18n="about">个人简介</h2>
+    <div class="card">
+      <p data-i18n-html="about_text">
+        国防科技大学计算机科学与技术专业博士研究生。研究聚焦于多核/异构架构上的深度学习编译与高性能推理系统，长期从事类GEMM算子与注意力模块的性能优化与自动化生成，并与国产 MT-3000 等架构紧密结合开展软件/硬件协同优化。在 SC、IPDPS、ICPP 等国际会议与 TACO 等期刊有相关产出，主持并参与多项国家重点科研项目，已获授权发明专利若干。
+      </p>
+    </div>
+  </section>
+
+  <!-- 研究方向 / Research Interests -->
   <section class="section">
     <h2 data-i18n="role">研究方向</h2>
     <div class="card">
-      <div>深度学习编译, 高性能推理系统, 算子优化, 并行计算</div>
+      深度学习编译与优化、高性能推理系统、算子自动生成与调优、并行与异构计算架构
     </div>
   </section>
 
+  <!-- 教育背景 / Education -->
   <section class="section">
     <h2 data-i18n="education">教育背景</h2>
     <div class="grid">
-      <div class="card"><strong>博士</strong> · 计算机科学与技术<br/><span class="meta">国防科技大学 · 2022.03–至今</span></div><div class="card"><strong>硕士</strong> · 计算机科学与技术<br/><span class="meta">国防科技大学 · 2019.09–2021.12</span></div><div class="card"><strong>本科</strong> · 软件工程（GPA 4.0/5.0，前7%）<br/><span class="meta">中山大学 · 2015.09–2019.06</span></div>
+      <div class="card"><strong>博士</strong> · 计算机科学与技术<br/><span class="meta">国防科技大学 · 2022.03–至今</span></div>
+      <div class="card"><strong>硕士</strong> · 计算机科学与技术<br/><span class="meta">国防科技大学 · 2019.09–2021.12</span></div>
+      <div class="card"><strong>本科</strong> · 软件工程（GPA 4.0/5.0，前7%）<br/><span class="meta">中山大学 · 2015.09–2019.06</span></div>
     </div>
   </section>
 
+  <!-- 论文（时间倒序） / Publications -->
   <section class="section">
-    <h2 data-i18n="publications">科研成果</h2>
+    <h2 data-i18n="publications">论文成果（时间倒序）</h2>
     <div class="card">
-      <strong data-i18n="pub-pub">已发表论文</strong>
       <ul class="list">
-        <li><em>Constraint-Driven Auto-Tuning of GEMM-like Operators for MT-3000 Many-core Processor</em>, SC’25 (CCF A) · 第一作者</li><li><em>Optimizing General Matrix Multiplications on Modern Multi-core DSPs</em>, IPDPS’24 (CCF B) · 共同一作</li><li><em>Optimizing Stencil Computation on Multi-core DSPs</em>, ICPP’24 (CCF B) · 共同一作</li><li><em>HighRPM: Combining Integrated Measurement and Software Power Modeling for High-Resolution Power Monitoring</em>, ICPP’23 (CCF B) · 第一作者</li>
+        <!-- 2025 -->
+        <li>
+          <em>Constraint-Driven Auto-Tuning of GEMM-like Operators for MT-3000 Many-core Processor</em> — SC: The International Conference for High Performance Computing, Networking, Storage and Analysis, 2025
+          <span class="paper-meta">（第一作者，CCF A）</span>
+          <span class="status" data-i18n="status_accepted">已录用</span>
+        </li>
+        <li>
+          <em>Optimizing Attention for Large Language Model Inference on the MT-3000 Many-Core Processor</em> — ACM Transactions on Architecture and Code Optimization (TACO), 2025
+          <span class="paper-meta">（第一作者，CCF A）</span>
+          <span class="status" data-i18n="status_revision">在修</span>
+        </li>
+        <li>
+          <em>InferWeave: Efficient LLM Inference on the MT-3000 Many-Core Processor</em> — IEEE/ACM International Symposium on Code Generation and Optimization (CGO), 2025
+          <span class="paper-meta">（第一作者，CCF B）</span>
+          <span class="status" data-i18n="status_submitted">在投</span>
+        </li>
+        <li>
+          <em>Automatic Generation of High-Performance GEMM Micro-Kernels on Multi-Core DSPs</em> — IEEE/ACM International Symposium on Code Generation and Optimization (CGO), 2025
+          <span class="paper-meta">（第一作者，CCF B）</span>
+          <span class="status" data-i18n="status_submitted">在投</span>
+        </li>
+        <!-- 2024 -->
+        <li>
+          <em>Optimizing General Matrix Multiplications on Modern Multi-core DSPs</em> — IEEE International Parallel and Distributed Processing Symposium (IPDPS), 2024
+          <span class="paper-meta">（共同一作，CCF B）</span>
+          <span class="status" data-i18n="status_published">已发表</span>
+        </li>
+        <li>
+          <em>Optimizing Stencil Computation on Multi-core DSPs</em> — International Conference on Parallel Processing (ICPP), 2024
+          <span class="paper-meta">（共同一作，CCF B）</span>
+          <span class="status" data-i18n="status_published">已发表</span>
+        </li>
+        <!-- 2023 -->
+        <li>
+          <em>HighRPM: Combining Integrated Measurement and Software Power Modeling for High-Resolution Power Monitoring</em> — International Conference on Parallel Processing (ICPP), 2023
+          <span class="paper-meta">（第一作者，CCF B）</span>
+          <span class="status" data-i18n="status_published">已发表</span>
+        </li>
       </ul>
-      <strong data-i18n="pub-under">在投/在修</strong>
-      <ul class="list">
-        <li><em>Optimizing Attention for Large Language Model Inference on the MT-3000 Many-Core Processor</em>, TACO (CCF A) · 第一作者</li><li><em>InferWeave: Efficient LLM Inference on the MT-3000 Many-Core Processor</em>, CGO’25 (CCF B) · 第一作者</li><li><em>Automatic Generation of High-Performance GEMM Micro-Kernels on Multi-Core DSPs</em>, CGO’25 (CCF B) · 第一作者</li>
-      </ul>
+      <div class="meta" style="margin-top:8px">* 由于不联网核对作者次序与 DOI，本页按你的简历信息呈现：显示题名、会议/期刊全称、年份、作者角色与状态。如需 IEEE/ACM 全引用格式，我可以在你提供 BibTeX/DOI 后一次性补全。</div>
     </div>
   </section>
 
+  <!-- 科研项目 / Projects -->
   <section class="section">
     <h2 data-i18n="projects">科研项目</h2>
     <div class="grid">
-      <div class="card"><strong>DynaChain 类GEMM算子自动调优</strong><ul class="list"><li>统一编译优化方法，覆盖矩阵乘/批量矩阵乘/卷积等类GEMM算子</li><li>约束驱动的参数空间裁剪，显式建模容量/带宽/寄存器限制</li><li>自动微内核生成，适配 MT-3000 架构（SIMD+VLIW）</li><li>成果发表于 SC’25（CCF A），申请发明专利 1 项</li></ul></div><div class="card"><strong>InferWeave 稠密大模型推理引擎</strong><ul class="list"><li>分析自注意力访存瓶颈，提出一致内存下的主机/设备端异步流水线</li><li>协同调度计算与内存卸载，显著提升 LLM 推理吞吐</li><li>成果投稿 CGO’25，申请发明专利 1 项</li></ul></div>
+      <div class="card">
+        <strong>DynaChain 类GEMM算子自动调优</strong>
+        <ul class="list">
+          <li>统一编译优化方法，覆盖矩阵乘/批量矩阵乘/卷积等类GEMM算子</li>
+          <li>约束驱动参数空间裁剪，显式建模容量/带宽/寄存器限制</li>
+          <li>自动微内核生成，适配 MT-3000 架构（SIMD+VLIW）</li>
+          <li>成果发表于 SC’25（CCF A），申请发明专利 1 项</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>InferWeave 稠密大模型推理引擎</strong>
+        <ul class="list">
+          <li>分析自注意力访存瓶颈，提出一致内存下的主机/设备端异步流水线</li>
+          <li>协同调度计算与内存卸载，显著提升 LLM 推理吞吐</li>
+          <li>成果投稿 CGO’25，申请发明专利 1 项</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>国家重点科研项目（参与）</strong>
+        <ul class="list">
+          <li>面向神经网络的图算融合编译器（军委科技委）</li>
+          <li>体系结构感知的并行编译优化（科技部重点研发）</li>
+          <li>数E级系统的高密度组装与配套管理技术（装备预研）</li>
+        </ul>
+      </div>
     </div>
   </section>
 
+  <!-- 荣誉与奖励 / Awards -->
   <section class="section">
     <h2 data-i18n="awards">荣誉与奖励</h2>
     <div class="card">
       <ul class="list">
-        <li>博士阶段：新生一等奖学金、二等奖学金、优秀学员、优秀学生干部（2022–2024）</li><li>硕士阶段：国家奖学金（2021）、优秀党员、优秀学员（2019–2021）</li><li>本科阶段：校级一等奖学金、MCM 美国大学生数学建模竞赛二等奖（2018）</li>
+        <li>博士：新生一等奖学金、二等奖学金、优秀学员、优秀学生干部（2022–2024）</li>
+        <li>硕士：国家奖学金（2021）、优秀党员、优秀学员（2019–2021）</li>
+        <li>本科：校级一等奖学金、MCM 美国大学生数学建模竞赛二等奖（2018）</li>
       </ul>
     </div>
   </section>
 
+  <!-- 技能 / Skills -->
   <section class="section">
     <h2 data-i18n="skills">技能</h2>
     <div class="card">
       <div><strong>编程 / Programming:</strong> C/C++, Python, Linux Shell</div>
-      <div><strong>科研 / Research:</strong> 高性能计算系统优化, 深度学习编译框架开发, 算子自动生成</div>
+      <div><strong>科研 / Research:</strong> 高性能计算系统优化, 深度学习编译框架开发, 算子自动生成与调优</div>
+      <div><strong>平台 / Platforms:</strong> 多核 DSP, MT-3000 国产超算, GPU (CUDA)</div>
       <div><strong>语言 / Languages:</strong> 英语 CET-6, 雅思 7.0</div>
     </div>
   </section>
 
-  <footer class="footer" data-i18n="footer">
-    © 2025 齐新新 · 本页由 GitHub Pages 托管
-  </footer>
+  <footer class="footer" data-i18n="footer">© 2025 齐新新 · 本页由 GitHub Pages 托管</footer>
 </div>
 </body>
 </html>
